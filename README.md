@@ -1,6 +1,12 @@
 # DevQ&A Platform
 
 A full-stack Question & Answer platform built with Angular and Node.js/Express, similar to Stack Overflow. This project was created as a final project for WDD430 Full-Stack Development class.
+## Project Demo
+
+You can view the project demo below:  
+👉 **[Project Demo](https://youtu.be/KIiQ8UVfjcQ)**
+
+
 
 ## Project Structure
 
