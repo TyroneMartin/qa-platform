@@ -1,0 +1,164 @@
+<div class="container mt-4">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+    <button class="btn btn-sm btn-outline-danger ms-2" routerLink="/home">Go Back</button>
+  </div>
+
+  <!-- Question Content -->
+  <div *ngIf="!loading && !error && question" class="row">
+    <div class="col-md-12">
+      
+      <!-- Question Header -->
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+          <h1 class="h3">{{ question.title }}</h1>
+          <div class="question-meta text-muted small">
+            Asked by <strong>{{ question.author }}</strong> 
+            {{ getTimeAgo(question!.createdAt) }}
+            <span class="ms-3">{{ question.views }} views</span>
+          </div>
+        </div>
+        <div class="btn-group">
+          <a [routerLink]="['/edit', question._id]" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-edit"></i> Edit
+          </a>
+          <button (click)="deleteQuestion()" class="btn btn-outline-danger btn-sm">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-1 text-center">
+              <div class="vote-buttons">
+                <button class="btn btn-link p-1">
+                  <i class="fas fa-chevron-up fa-lg"></i>
+                </button>
+                <div class="vote-count h5">{{ question.votes }}</div>
+                <button class="btn btn-link p-1">
+                  <i class="fas fa-chevron-down fa-lg"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-11">
+              <div class="question-content">
+                <p class="mb-3" style="white-space: pre-line;">{{ question.content }}</p>
+                
+                <!-- Tags -->
+                <div class="mb-3" *ngIf="question?.tags && question.tags.length > 0">
+                  <span *ngFor="let tag of question.tags" class="badge bg-secondary me-1">
+                    {{ tag }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Answers Section -->
+      <div class="answers-section">
+        <h4 class="mb-3">
+          {{ question.answers.length || 0 }} 
+          {{ (question.answers.length || 0) === 1 ? 'Answer' : 'Answers' }}
+        </h4>
+
+        <!-- Individual Answers -->
+        <div *ngFor="let answer of question?.answers" class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-1 text-center">
+                <div class="vote-buttons">
+                  <button class="btn btn-link p-1">
+                    <i class="fas fa-chevron-up fa-lg"></i>
+                  </button>
+                  <div class="vote-count h5">{{ answer?.votes }}</div>
+                  <button class="btn btn-link p-1">
+                    <i class="fas fa-chevron-down fa-lg"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-11">
+                <p class="mb-3" style="white-space: pre-line;">{{ answer?.content }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">
+                    Answered by <strong>{{ answer?.author }}</strong> 
+                    {{ answer?.createdAt ? getTimeAgo(answer.createdAt) : '' }}
+                  </small>
+                  <button *ngIf="answer?._id" (click)="deleteAnswer(answer._id!)" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Answers State -->
+        <div *ngIf="!question?.answers || question.answers.length === 0" class="text-center py-4">
+          <i class="fas fa-comment fa-2x text-muted mb-2"></i>
+          <p class="text-muted">No answers yet. Be the first to help!</p>
+        </div>
+      </div>
+
+      <!-- Answer Form -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="mb-0">Your Answer</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="answerForm" (ngSubmit)="submitAnswer()">
+            
+            <div class="mb-3">
+              <label for="answerContent" class="form-label">Answer *</label>
+              <textarea 
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('content')"
+                id="answerContent"
+                formControlName="content"
+                rows="6"
+                placeholder="Write your answer here..."></textarea>
+              <div *ngIf="isFieldInvalid('content')" class="invalid-feedback">
+                Answer must be at least 10 characters long
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="answerAuthor" class="form-label">Your Name *</label>
+              <input 
+                type="text" 
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('author')"
+                id="answerAuthor"
+                formControlName="author"
+                placeholder="Enter your name">
+              <div *ngIf="isFieldInvalid('author')" class="invalid-feedback">
+                Name is required
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="answerForm.invalid || isSubmittingAnswer">
+              <span *ngIf="isSubmittingAnswer" class="spinner-border spinner-border-sm me-2"></span>
+              {{ isSubmittingAnswer ? 'Posting...' : 'Post Answer' }}
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

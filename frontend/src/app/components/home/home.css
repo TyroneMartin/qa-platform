@@ -1,0 +1,24 @@
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navbar-brand i {
+  color: #ffc107;
+}
+
+.search-container {
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    margin-top: 1rem;
+  }
+  
+  .search-container {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}

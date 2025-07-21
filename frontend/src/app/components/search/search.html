@@ -1,0 +1,16 @@
+<div class="search-container">
+  <div class="input-group">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Search questions..." 
+      [(ngModel)]="searchQuery"
+      (keypress)="onKeyPress($event)">
+    <button class="btn btn-outline-light" type="button" (click)="onSearch()">
+      <i class="fas fa-search"></i>
+    </button>
+    <button *ngIf="searchQuery" class="btn btn-outline-light" type="button" (click)="clearSearch()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

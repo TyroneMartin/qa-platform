@@ -1,0 +1,37 @@
+<nav *ngIf="totalPages > 1" aria-label="Question pagination">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="!hasPrevPage">
+      <button class="page-link" (click)="previousPage()" [disabled]="!hasPrevPage">
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+    </li>
+
+    <li *ngIf="currentPage > 3" class="page-item">
+      <button class="page-link" (click)="goToPage(1)">1</button>
+    </li>
+
+    <li *ngIf="currentPage > 4" class="page-item disabled">
+      <span class="page-link">...</span>
+    </li>
+
+    <li *ngFor="let page of getVisiblePages()" 
+        class="page-item" 
+        [class.active]="page === currentPage">
+      <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+    </li>
+
+    <li *ngIf="currentPage < totalPages - 3" class="page-item disabled">
+      <span class="page-link">...</span>
+    </li>
+
+    <li *ngIf="currentPage < totalPages - 2" class="page-item">
+      <button class="page-link" (click)="goToPage(totalPages)">{{ totalPages }}</button>
+    </li>
+
+    <li class="page-item" [class.disabled]="!hasNextPage">
+      <button class="page-link" (click)="nextPage()" [disabled]="!hasNextPage">
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
+    </li>
+  </ul>
+</nav>

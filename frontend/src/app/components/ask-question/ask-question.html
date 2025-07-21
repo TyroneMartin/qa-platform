@@ -1,0 +1,119 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Ask a Question</h3>
+          <small class="text-muted">Be specific and clear to get the best answers</small>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+            
+            <!-- Error Message -->
+            <div *ngIf="error" class="alert alert-danger">
+              {{ error }}
+            </div>
+
+            <!-- Title Field -->
+            <div class="mb-3">
+              <label for="title" class="form-label">
+                Question Title *
+                <small class="text-muted">(minimum 10 characters)</small>
+              </label>
+              <input 
+                type="text" 
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('title')"
+                id="title"
+                formControlName="title"
+                placeholder="What's your programming question? Be specific.">
+              <div *ngIf="isFieldInvalid('title')" class="invalid-feedback">
+                {{ getFieldError('title') }}
+              </div>
+            </div>
+
+            <!-- Content Field -->
+            <div class="mb-3">
+              <label for="content" class="form-label">
+                Question Details *
+                <small class="text-muted">(minimum 20 characters)</small>
+              </label>
+              <textarea 
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('content')"
+                id="content"
+                formControlName="content"
+                rows="8"
+                placeholder="Provide more details about your question. Include what you've tried and what specific help you need."></textarea>
+              <div *ngIf="isFieldInvalid('content')" class="invalid-feedback">
+                {{ getFieldError('content') }}
+              </div>
+            </div>
+
+            <!-- Author Field -->
+            <div class="mb-3">
+              <label for="author" class="form-label">Your Name *</label>
+              <input 
+                type="text" 
+                class="form-control"
+                [class.is-invalid]="isFieldInvalid('author')"
+                id="author"
+                formControlName="author"
+                placeholder="Enter your name">
+              <div *ngIf="isFieldInvalid('author')" class="invalid-feedback">
+                {{ getFieldError('author') }}
+              </div>
+            </div>
+
+            <!-- Tags Field -->
+            <div class="mb-3">
+              <label for="tags" class="form-label">
+                Tags
+                <small class="text-muted">(optional, separate with commas)</small>
+              </label>
+              <input 
+                type="text" 
+                class="form-control"
+                id="tags"
+                formControlName="tags"
+                placeholder="javascript, angular, typescript">
+              <small class="form-text text-muted">
+                Add up to 5 tags to describe what your question is about
+              </small>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-secondary" routerLink="/home">
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="questionForm.invalid || isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isSubmitting ? 'Posting...' : 'Post Question' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Help Tips -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h5 class="mb-0">Tips for asking a good question</h5>
+        </div>
+        <div class="card-body">
+          <ul class="mb-0">
+            <li>Search for similar questions before posting</li>
+            <li>Write a clear, specific title</li>
+            <li>Describe what you've already tried</li>
+            <li>Include relevant code snippets</li>
+            <li>Use proper tags to help others find your question</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

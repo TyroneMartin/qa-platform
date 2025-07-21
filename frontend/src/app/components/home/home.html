@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <h1 class="h3">Latest Questions</h1>
+      <p class="text-muted">{{ totalQuestions }} questions found</p>
+    </div>
+    <div class="col-md-4 text-end">
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Sort by: {{ sortBy === 'createdAt' ? 'Newest' : sortBy === 'votes' ? 'Most Voted' : 'Most Views' }}
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="onSortChange('createdAt')">Newest</a></li>
+          <li><a class="dropdown-item" (click)="onSortChange('votes')">Most Voted</a></li>
+          <li><a class="dropdown-item" (click)="onSortChange('views')">Most Views</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+    <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadQuestions()">Retry</button>
+  </div>
+
+  <!-- Questions List -->
+  <div *ngIf="!loading && !error">
+    <qa-question-list 
+      [questions]="questions" 
+      (deleteQuestion)="deleteQuestion($event)">
+    </qa-question-list>
+
+    <!-- Pagination -->
+    <qa-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      [hasNextPage]="hasNextPage"
+      [hasPrevPage]="hasPrevPage"
+      (pageChange)="onPageChange($event)">
+    </qa-pagination>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && questions.length === 0" class="text-center py-5">
+    <i class="fas fa-question-circle fa-3x text-muted mb-3"></i>
+    <h3>No questions found</h3>
+    <p class="text-muted">Be the first to ask a question!</p>
+    <a routerLink="/ask" class="btn btn-primary">Ask a Question</a>
+  </div>
+</div>
