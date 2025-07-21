@@ -1,59 +1,183 @@
-# QuestionAnswerApp
+# DevQ&A Platform
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+A full-stack Question & Answer platform built with Angular and Node.js/Express, similar to Stack Overflow. This project was created as a final project for WDD430 Full-Stack Development class.
 
-## Development server
+## Project Structure
 
-To start a local development server, run:
+This project has a **custom setup** with separate frontend and backend servers:
+
+```
+qa-platform/
+├── frontend/          # Angular application (port 4200)
+├── backend/           # Node.js/Express API (port 3000)
+└── README.md
+```
+
+## Development Setup
+
+**Important:** This project requires starting BOTH backend and frontend servers separately.
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- MongoDB (local installation or MongoDB Atlas)
+- Angular CLI (`npm install -g @angular/cli`)
+
+### 1. Backend Setup
 
 ```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies
+npm install
+
+# Create .env file with your MongoDB connection
+echo "MONGODB_URI=mongodb://localhost:27017/qa-platform" > .env
+
+# Start the backend server
+npm run dev
+```
+
+The backend server will run on `http://localhost:3000`
+
+### 2. Frontend Setup
+
+```bash
+# Navigate to frontend directory (in a new terminal)
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start the Angular development server
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The frontend application will run on `http://localhost:4200`
 
-## Code scaffolding
+### 3. Verify Setup
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Backend API: `http://localhost:3000/api/health`
+- Frontend App: `http://localhost:4200`
+- API Endpoint: `http://localhost:3000/api/questions`
 
+##  Test Data Setup
+
+For testing purposes, you can populate the database with sample questions and answers.
+
+👉 **[View Test Data Setup Instructions](./backend/TEST_DATA_SETUP.md)**
+
+##  Available Scripts
+
+### Backend Scripts
 ```bash
-ng generate component component-name
+npm run dev          # Start development server with nodemon
+npm start           # Start production server
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### Frontend Scripts
 ```bash
-ng generate --help
+ng serve            # Start development server
+ng build            # Build for production
+ng test             # Run unit tests
+ng e2e              # Run end-to-end tests
 ```
 
-## Building
+## Features
 
-To build the project run:
+- View questions with pagination and search
+- Ask new questions with tags
+- Answer questions
+- Edit and delete questions/answers
+- Vote on questions and answers
+- Question view tracking
+- Responsive design
+- Real-time updates
 
-```bash
-ng build
-```
+## Technology Stack
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+**Frontend:**
+- Angular 18
+- TypeScript
+- Tailwind CSS
+- Angular Router
+- RxJS
 
-## Running unit tests
+**Backend:**
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- CORS enabled
+- RESTful API
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+##  API Endpoints
 
-```bash
-ng test
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/questions` | Get all questions with pagination |
+| GET | `/api/questions/:id` | Get single question with answers |
+| POST | `/api/questions` | Create new question |
+| PUT | `/api/questions/:id` | Update question |
+| DELETE | `/api/questions/:id` | Delete question |
+| POST | `/api/questions/:id/answers` | Add answer to question |
+| PUT | `/api/questions/:questionId/answers/:answerId` | Update answer |
+| DELETE | `/api/questions/:questionId/answers/:answerId` | Delete answer |
+| GET | `/api/health` | Health check endpoint |
 
-## Running end-to-end tests
+##  Production Deployment
 
-For end-to-end (e2e) testing, run:
+### Backend Deployment
 
-```bash
-ng e2e
-```
+1. **Environment Variables:**
+   ```bash
+   NODE_ENV=production
+   MONGODB_URI=your_production_mongodb_uri
+   PORT=3000
+   ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+2. **Build and Start:**
+   ```bash
+   npm install --production
+   npm start
+   ```
 
-## Additional Resources
+### Frontend Deployment
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. **Build for Production:**
+   ```bash
+   ng build --configuration=production
+   ```
+
+2. **Deploy dist/ folder** to your hosting provider (Netlify, Vercel, AWS S3, etc.)
+
+3. **Update API Base URL** in your environment files to point to your production backend
+
+### Deployment Platforms
+
+**Backend Options:**
+- Heroku
+- Railway
+- DigitalOcean App Platform
+- AWS Elastic Beanstalk
+- Google Cloud Run
+
+**Frontend Options:**
+- Netlify
+- Vercel
+- AWS S3 + CloudFront
+- GitHub Pages
+- Firebase Hosting
+
+**Database Options:**
+- MongoDB Atlas (recommended)
+- AWS DocumentDB
+- Azure Cosmos DB
+
+## Contributing
+
+This project was created for educational purposes as part of WDD430 Full-Stack Development course.
+
+---
+
+**Note:** Make sure both servers are running during development. The frontend (Angular) serves on port 4200 and communicates with the backend API on port 3000.
