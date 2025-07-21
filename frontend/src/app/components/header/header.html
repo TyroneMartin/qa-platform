@@ -6,7 +6,7 @@
     </a>
 
     <div class="navbar-nav ms-auto d-flex flex-row">
-      <qa-search class="me-3"></qa-search>
+      <qa-search class="me-3" (search)="onSearch($event)"></qa-search>
       <a class="btn btn-outline-light me-2" routerLink="/home">
         <i class="fas fa-home"></i> Home
       </a>

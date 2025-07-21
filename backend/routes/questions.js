@@ -18,7 +18,7 @@ const getPaginationData = (page, limit, total) => {
 router.get('/', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = Math.min(parseInt(req.query.limit) || 20, 50); // Max 50 per page
+    const limit = Math.min(parseInt(req.query.limit) || 5, 10); // Max 10 per page
     const search = req.query.search || '';
     const sortBy = req.query.sortBy || 'createdAt';
     const sortOrder = req.query.sortOrder || 'desc';
