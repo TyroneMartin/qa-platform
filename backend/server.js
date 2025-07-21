@@ -65,7 +65,7 @@ app.use('*', (req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);
-  console.log(` API Base URL: http://localhost:${PORT}/api`);
+  console.log(` API Base URL: http://localhost:${PORT}/api/questions`);
   console.log(` Health Check: http://localhost:${PORT}/api/health`);
 });
 

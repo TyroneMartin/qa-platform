@@ -44,11 +44,11 @@ router.get('/', async (req, res) => {
 
     // Execute queries
     const [questions, total] = await Promise.all([
-      Question.find(searchQuery)
-        .sort(sortObj)
+     Question.find(searchQuery)
+         .sort(sortObj)
         .skip(skip)
-        .limit(limit)
-        .select('-answers'), // Exclude answers for list view
+        .limit(limit),
+        // .select('-answers'), // Exclude answers for list view
       Question.countDocuments(searchQuery)
     ]);
 

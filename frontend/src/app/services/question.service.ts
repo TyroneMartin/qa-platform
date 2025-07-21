@@ -41,7 +41,7 @@ export interface QuestionResponse {
 })
 export class QuestionService {
   // private apiUrl = 'http://localhost:3000/api/questions';
-     private apiUrl = `${environment.apiUrl}/questions`;
+     private apiUrl = `${environment.apiUrl}questions`;
 
 
   constructor(private http: HttpClient) { }
